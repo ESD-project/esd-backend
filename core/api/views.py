@@ -114,6 +114,24 @@ class CarDetailAPI(APIView):
         }, status=status.HTTP_200_OK)
 
 
+class DeleteCarAPI(APIView):
+    '''This CBV is used to delete a car'''
+    permission_classes = [permissions.AllowAny]
+
+    def delete(self, request, *args, **kwargs):
+        car_id = request.data.get('car_id')
+        car = Car.objects.filter(id=car_id).first()
+        if car:
+            car.delete()
+            return Response({
+                "message": "Car Deleted Successfully",
+            }, status=status.HTTP_200_OK)
+        else:
+            return Response({
+                "message": "Car Not Found",
+            }, status=status.HTTP_404_NOT_FOUND)
+
+
 class RentalListAPI(APIView):
     '''This CBV is used to get the list of all rentals in the system'''
     permission_classes = [permissions.AllowAny]
