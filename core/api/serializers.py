@@ -38,3 +38,9 @@ class RegisterSerializer(serializers.ModelSerializer):
             lname=validated_data['lname'],
         )
         return user
+
+
+class CarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Car
+        fields = "__all__"
