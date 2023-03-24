@@ -1,3 +1,5 @@
+from .models import RentalSlot
+from .models import Rental
 from django.contrib.auth import authenticate
 from entities.models import User
 from rest_framework import serializers
@@ -43,4 +45,16 @@ class RegisterSerializer(serializers.ModelSerializer):
 class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
+        fields = "__all__"
+
+
+class RentalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rental
+        fields = "__all__"
+
+
+class RentalSlotsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RentalSlot
         fields = "__all__"
