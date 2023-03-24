@@ -13,13 +13,14 @@ from .serializers import RegisterSerializer, UserSerializer
 class OverViewEndpoint(APIView):
     def get(self, request):
         return Response({
-            'message': 'Hello, world!'
+            'title': 'Hello, world!',
+            'message': 'API IS WORKING!',
         })
 
 
 class LoginAPI(KnoxLoginView):
     '''Login api endpoint'''
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request, format=None):
         serializer = AuthTokenSerializer(data=request.data)
@@ -31,6 +32,21 @@ class LoginAPI(KnoxLoginView):
 
 class RegisterStaffAPI(generics.GenericAPIView):
     '''This CBV is used to register a new staff user'''
+    permission_classes = [permissions.AllowAny]
+    serializer_class = RegisterSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+            "user": UserSerializer(user).data,
+            "token": AuthToken.objects.create(user)[1],
+        }, status=status.HTTP_201_CREATED)
+
+
+class RegisterUserAPI(generics.GenericAPIView):
+    '''This CBV is used to register a new ordinary user'''
     permission_classes = [permissions.AllowAny]
     serializer_class = RegisterSerializer
 
