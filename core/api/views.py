@@ -146,3 +146,15 @@ class RentalSlotListAPI(APIView):
         return Response({
             "rentalslots": RentalSlotsSerializer(rentalslots, many=True).data,
         }, status=status.HTTP_200_OK)
+
+
+class RentalSlotDetailAPI(APIView):
+    '''This CBV is used to get the details of a rental slot'''
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        rental_slot_id = request.data.get('rental_slot_id')
+        rentalslot = RentalSlot.objects.filter(id=rental_slot_id).first()
+        return Response({
+            "rentalslot": RentalSlotsSerializer(rentalslot, many=False).data,
+        }, status=status.HTTP_200_OK)
