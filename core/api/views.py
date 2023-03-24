@@ -155,6 +155,24 @@ class RentalDetailAPI(APIView):
         }, status=status.HTTP_200_OK)
 
 
+class DeleteRentalAPI(APIView):
+    '''This CBV is used to delete a rental'''
+    permission_classes = [permissions.AllowAny]
+
+    def delete(self, request, *args, **kwargs):
+        rental_id = request.data.get('rental_id')
+        rental = Rental.objects.filter(id=rental_id).first()
+        if rental:
+            rental.delete()
+            return Response({
+                "message": "Rental Deleted Successfully",
+            }, status=status.HTTP_200_OK)
+        else:
+            return Response({
+                "message": "Rental Not Found",
+            }, status=status.HTTP_404_NOT_FOUND)
+
+
 class RentalSlotListAPI(APIView):
     '''This CBV is used to get the list of all rental slots'''
     permission_classes = [permissions.AllowAny]

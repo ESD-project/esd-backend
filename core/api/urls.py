@@ -22,6 +22,7 @@ urlpatterns += [
 urlpatterns += [
     path('rentals/', views.RentalListAPI.as_view(), name='rental_list'),
     path('rentals-detail/', views.RentalDetailAPI.as_view(), name='rental_detail'),
+    path('delete-rentals/', views.DeleteRentalAPI.as_view(), name='delete-rental'),
 ]
 
 # rental slots
