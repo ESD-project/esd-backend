@@ -194,3 +194,21 @@ class RentalSlotDetailAPI(APIView):
         return Response({
             "rentalslot": RentalSlotsSerializer(rentalslot, many=False).data,
         }, status=status.HTTP_200_OK)
+
+
+class DeleteRentalSlotAPI(APIView):
+    '''This CBV is used to delete a rental slot'''
+    permission_classes = [permissions.AllowAny]
+
+    def delete(self, request, *args, **kwargs):
+        rental_slot_id = request.data.get('rental_slot_id')
+        rental_slot = RentalSlot.objects.filter(id=rental_slot_id).first()
+        if rental_slot:
+            rental_slot.delete()
+            return Response({
+                "message": "Rental Slot Deleted Successfully",
+            }, status=status.HTTP_200_OK)
+        else:
+            return Response({
+                "message": "Rental Slot Not Found",
+            }, status=status.HTTP_404_NOT_FOUND)

@@ -29,6 +29,7 @@ urlpatterns += [
 urlpatterns += [
     path('rental-slots/', views.RentalSlotListAPI.as_view(), name='rental_slot_list'),  # noqa
     path('rental-slots-detail/', views.RentalSlotDetailAPI.as_view(), name='rental_slot_detail'),  # noqa
+    path('delete-rental-slot/', views.DeleteRentalSlotAPI.as_view(), name='delete_rental_slot'),  # noqa
 ]
 
 # API AUTHENTICATION
