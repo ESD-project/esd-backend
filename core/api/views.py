@@ -109,5 +109,16 @@ class RentalListAPI(APIView):
     def get(self, request, *args, **kwargs):
         rentals = Rental.objects.all().order_by('id')
         return Response({
-            "cars": CarSerializer(cars, many=True).data,
+            "rentals": RentalSerializer(cars, many=True).data,
+        }, status=status.HTTP_200_OK)
+
+
+class RentalSlotListAPI(APIView):
+    '''This CBV is used to get the list of all rental slots'''
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        rentalslots = RentalSlot.objects.all().order_by('id')
+        return Response({
+            "rentalslots": RentalSlotsSerializer(rentalslots, many=True).data,
         }, status=status.HTTP_200_OK)
