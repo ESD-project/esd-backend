@@ -107,7 +107,7 @@ class CarDetailAPI(APIView):
     permission_classes = [permissions.AllowAny]
 
     def get(self, request, *args, **kwargs):
-        car_id = request.data.get('id')
+        car_id = request.data.get('car_id')
         car = Car.objects.filter(id=car_id).first()
         return Response({
             "car": CarSerializer(car, many=False).data,
@@ -122,6 +122,18 @@ class RentalListAPI(APIView):
         rentals = Rental.objects.all().order_by('id')
         return Response({
             "rentals": RentalSerializer(cars, many=True).data,
+        }, status=status.HTTP_200_OK)
+
+
+class RentalDetailAPI(APIView):
+    '''This CBV is used to get the details of a rental'''
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        rental_id = request.data.get('rental_id')
+        rental = Rental.objects.filter(id=rental_id).first()
+        return Response({
+            "rental": RentalSerializer(rental, many=False).data,
         }, status=status.HTTP_200_OK)
 
 
