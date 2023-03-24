@@ -1,3 +1,4 @@
+from api.models import Car
 from django.shortcuts import render
 from rest_framework.views import APIView
 from knox.models import AuthToken
@@ -87,4 +88,26 @@ class UserProfileAPI(APIView):
         user = request.user
         return Response({
             "user": UserSerializer(user).data,
+        }, status=status.HTTP_200_OK)
+
+
+class CarListAPI(APIView):
+    '''This CBV is used to get the list of all cars in the system'''
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        cars = Car.objects.all().order_by('id')
+        return Response({
+            "cars": CarSerializer(cars, many=True).data,
+        }, status=status.HTTP_200_OK)
+
+
+class RentalListAPI(APIView):
+    '''This CBV is used to get the list of all rentals in the system'''
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        rentals = Rental.objects.all().order_by('id')
+        return Response({
+            "cars": CarSerializer(cars, many=True).data,
         }, status=status.HTTP_200_OK)
