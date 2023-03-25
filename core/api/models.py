@@ -46,7 +46,7 @@ class Brand(models.Model):
 
 
 class Car(models.Model):
-    image = models.ImageField(upload_to='car_images')
+    image = models.ImageField(upload_to='car_images', blank=True, null=True)
     model = models.CharField(max_length=100)
     colour = models.CharField(max_length=100)
     seats = models.IntegerField()
