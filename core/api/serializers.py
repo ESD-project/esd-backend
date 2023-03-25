@@ -1,7 +1,8 @@
 from .models import RentalSlot
 from .models import Rental
+from .models import Car
 from django.contrib.auth import authenticate
-from entities.models import User
+from api.models import User
 from rest_framework import serializers
 from rest_framework.response import Response
 
