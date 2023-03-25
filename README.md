@@ -17,6 +17,10 @@ Access the development server at http://localhost:8000/.
 # Features
 This Django project includes the following features:
 
+Login
+
+Logout
+
 View List of Cars
 
 View Car details
