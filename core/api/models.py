@@ -92,3 +92,25 @@ class Rental(models.Model):
 
     class Meta:
         db_table = 'rental'
+
+
+class Transaction(models.Model):
+    def generate_transaction_id():
+        time_id = str(int(time.time() * 100))
+        return "".join(random.choices(string.ascii_uppercase + time_id + string.digits, k=12))
+    transaction_id = models.CharField(max_length=255, primary_key=True, default=generate_transaction_id)  # noqa
+    external_id = models.CharField(max_length=255, null=True, blank=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    network = models.CharField(max_length=255, null=True, blank=True)
+    status_code = models.CharField(max_length=255, null=True, blank=True)
+    status_message = models.CharField(max_length=255, null=True, blank=True)
+    source_phone = models.CharField(max_length=255, null=True, blank=True)
+    rental = models.ForeignKey(Rental, on_delete=models.CASCADE, null=True, blank=True)  # noqa
+    note = models.CharField(max_length=255, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.transaction_id if self.transaction_id else "transaction"
+
+    class Meta:
+        db_table = 'transaction'
