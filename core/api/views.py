@@ -280,3 +280,32 @@ class DeleteBrandAPI(APIView):
             return Response({
                 "message": "Brand Not Found",
             }, status=status.HTTP_404_NOT_FOUND)
+
+
+class UsersListAPI(APIView):
+    '''This CBV is used to get the list of all users'''
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        users = User.objects.all().order_by('id')
+        return Response({
+            "users": UserSerializer(users, many=True).data,
+        }, status=status.HTTP_200_OK)
+
+
+class DeleteUserAPI(APIView):
+    '''This CBV is used to delete a user'''
+    permission_classes = [permissions.AllowAny]
+
+    def delete(self, request, *args, **kwargs):
+        user_id = request.data.get('user_id')
+        user = User.objects.filter(id=user_id).first()
+        if user:
+            user.delete()
+            return Response({
+                "message": "User Deleted Successfully",
+            }, status=status.HTTP_200_OK)
+        else:
+            return Response({
+                "message": "User Not Found",
+            }, status=status.HTTP_404_NOT_FOUND)
