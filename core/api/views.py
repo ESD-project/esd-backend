@@ -102,6 +102,51 @@ class CarListAPI(APIView):
         }, status=status.HTTP_200_OK)
 
 
+'''
+image
+colour
+seats
+car_type
+number_plate
+'''
+
+
+class CreateUpdateCarAPI(APIView):
+    '''This CBV is used to create/update a car'''
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        car_id = request.data.get('car_id') or None
+        if car_id:
+            car = Car.objects.filter(id=car_id).first()
+            if car:
+                car.model = request.data.get('model')
+                car.image = request.FILES.get('image')
+                car.colour = request.data.get('colour')
+                car.seats = request.data.get('seats')
+                car.car_type = request.data.get('car_type')
+                car.number_plate = request.data.get('number_plate')
+                car.save()
+                return Response({
+                    "message": "Car Updated Successfully",
+                }, status=status.HTTP_200_OK)
+            else:
+                return Response({
+                    "message": "Car Not Found",
+                }, status=status.HTTP_404_NOT_FOUND)
+        else:
+            car = Car.objects.create(
+                model=request.data.get('model'),
+                colour=request.data.get('colour'),
+                seats=request.data.get('seats'),
+                car_type=request.data.get('car_type'),
+                number_plate=request.data.get('number_plate'),
+            )
+            return Response({
+                "message": "Car Created Successfully",
+            }, status=status.HTTP_200_OK)
+
+
 class CarDetailAPI(APIView):
     '''This CBV is used to get the details of a car'''
     permission_classes = [permissions.AllowAny]
