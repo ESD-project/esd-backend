@@ -129,7 +129,7 @@ class CreateUpdateCarAPI(APIView):
                 }, status=status.HTTP_404_NOT_FOUND)
         else:
             car = Car.objects.create(
-                image = request.FILES.get('image') or None,
+                image=request.FILES.get('image') or None,
                 model=request.data.get('model'),
                 colour=request.data.get('colour'),
                 seats=request.data.get('seats'),
@@ -250,4 +250,33 @@ class DeleteRentalSlotAPI(APIView):
         else:
             return Response({
                 "message": "Rental Slot Not Found",
+            }, status=status.HTTP_404_NOT_FOUND)
+
+
+class BrandListAPI(APIView):
+    '''This CBV is used to get the list of all brands'''
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        brands = Brand.objects.all().order_by('id')
+        return Response({
+            "brands": BrandSerializer(brands, many=True).data,
+        }, status=status.HTTP_200_OK)
+
+
+class DeleteBrandAPI(APIView):
+    '''This CBV is used to delete a brand'''
+    permission_classes = [permissions.AllowAny]
+
+    def delete(self, request, *args, **kwargs):
+        brand_id = request.data.get('brand_id')
+        brand = Brand.objects.filter(id=brand_id).first()
+        if brand:
+            brand.delete()
+            return Response({
+                "message": "Brand Deleted Successfully",
+            }, status=status.HTTP_200_OK)
+        else:
+            return Response({
+                "message": "Brand Not Found",
             }, status=status.HTTP_404_NOT_FOUND)
