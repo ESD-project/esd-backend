@@ -18,6 +18,12 @@ urlpatterns += [
     path('delete-car/', views.DeleteCarAPI.as_view(), name='car_update'),
 ]
 
+# brand
+urlpatterns += [
+    path('brands/', views.BrandListAPI.as_view(), name='brands'),
+    path('delete-brand/', views.DeleteBrandAPI.as_view(), name='delete-brand'),
+]
+
 # rentals
 urlpatterns += [
     path('rentals/', views.RentalListAPI.as_view(), name='rental_list'),
