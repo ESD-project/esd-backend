@@ -264,6 +264,33 @@ class BrandListAPI(APIView):
         }, status=status.HTTP_200_OK)
 
 
+class CreateUpdateBrandAPI(APIView):
+    '''This CBV is used to create/update a car brand'''
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        brand_id = request.data.get('brand_id') or None
+        if brand_id:
+            brand = Brand.objects.filter(id=brand_id).first()
+            if brand:
+                brand.name = request.data.get('name')
+                brand.save()
+                return Response({
+                    "message": "Brand Updated Successfully",
+                }, status=status.HTTP_200_OK)
+            else:
+                return Response({
+                    "message": "Brand Not Found",
+                }, status=status.HTTP_404_NOT_FOUND)
+        else:
+            car = Car.objects.create(
+                name=request.data.get('name'),
+            )
+            return Response({
+                "message": "Car Created Successfully",
+            }, status=status.HTTP_200_OK)
+
+
 class DeleteBrandAPI(APIView):
     '''This CBV is used to delete a brand'''
     permission_classes = [permissions.AllowAny]
