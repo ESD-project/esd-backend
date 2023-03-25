@@ -24,6 +24,12 @@ urlpatterns += [
     path('delete-brand/', views.DeleteBrandAPI.as_view(), name='delete-brand'),
 ]
 
+# users
+urlpatterns += [
+    path('users/', views.UsersListAPI.as_view(), name='users'),
+    path('users-brand/', views.DeleteUserAPI.as_view(), name='delete-user'),
+]
+
 # rentals
 urlpatterns += [
     path('rentals/', views.RentalListAPI.as_view(), name='rental_list'),
