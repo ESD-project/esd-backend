@@ -21,6 +21,7 @@ urlpatterns += [
 # brand
 urlpatterns += [
     path('brands/', views.BrandListAPI.as_view(), name='brands'),
+    path('create-update-brand/', views.CreateUpdateBrandAPI.as_view(), name='create_update_brand'),  # noqa
     path('delete-brand/', views.DeleteBrandAPI.as_view(), name='delete-brand'),
 ]
 
