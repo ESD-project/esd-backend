@@ -3,15 +3,25 @@ This is the backend services for the ESD car rental/booking project.
 
 # Getting Started
 To get started with this project, follow these steps:
+
 Clone the repository to your local machine using git clone https://github.com/ESD-project/esd-backend.git.
+
 Create virtual environment: python -m venv venv
+
 CD into the venv: cd venv
+
 Activate the venv: Scripts/activate
+
 CD back: cd ..
-Install the required packages using pip install -r requirements.txt.
+
+Install the required packages using pip install -r requirements.txt
+
 Make migrations using: python manage.py makemigrations
+
 Migrate the migrations: python manage.py migrate
-Run the Django development server using python manage.py runserver.
+
+Run the Django development server using python manage.py runserver
+
 Access the development server at http://localhost:8000/.
 
 # Features
