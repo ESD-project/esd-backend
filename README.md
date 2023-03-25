@@ -29,8 +29,15 @@ View List of Rental Slots
 View Rental Slot Details
 Delete Rental Slot
 
+View List of Brand
+Delete Brand
+Create Update Brand
+
 Create User Account
 View List of User
+Delete User
+
+
 
 # Dependencies
 This Django project has the following dependencies:
@@ -38,7 +45,7 @@ Django 4.1.7
 Python 3.9.7
 ** Remember to install the dependencies from the requirements.txt file
 
-#Contributing
+# Contributing
 If you'd like to contribute to this project, please follow these steps:
 Fork the project to your own GitHub account.
 Create a new branch with your changes using git checkout -b my-new-feature.
@@ -46,8 +53,6 @@ Make your changes and commit them with descriptive commit messages.
 Push your changes to your branch using git push origin my-new-feature.
 Create a pull request for your changes to be reviewed.
 
-#License
-This project is licensed under the [insert license name] license. See the LICENSE.md file for details.
 
 Contact
 If you have any questions or feedback about this project, please contact princesamuelpks@gmail.com.
