@@ -336,3 +336,26 @@ class DeleteUserAPI(APIView):
             return Response({
                 "message": "User Not Found",
             }, status=status.HTTP_404_NOT_FOUND)
+
+
+class RentBeforePayment(APIView):
+    '''Users are able to rent without having to pay first'''
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        slot_id = request.data.get('slot_id')
+        start_date = request.data.get('start_date')
+        end_date = request.data.get('end_date')
+
+        slot = RentalSlot.objects.filter(ud=slot_id).first()
+        try:
+            rental = Rental.objects.create(
+                user=user, rental_slot=slot, start_date=start_date, end_date=end_date)
+        except Exception as e:
+            return Response({'error': [e]}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({
+                "message": "Rental Created Successfully",
+                "data": RentalSlotsSerializer(rental, many=False).data
+            }, status=status.HTTP_200_OK)
